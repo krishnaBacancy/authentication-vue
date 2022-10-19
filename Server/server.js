@@ -28,7 +28,7 @@ const auth = (req, res, next) => {
 }
 
 router.post('/', auth, async (req, res) => {
-  console.log('req.user', req.user);
+  // console.log('req.user', req.user);
   const { username, password } = req.user;
   const data = qs.stringify({
     'scope': 'offline_access',

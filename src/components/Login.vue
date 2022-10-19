@@ -16,15 +16,15 @@
           v-model.trim="$v.email.$model"
           :class="$v.email.$error ? 'is-invalid' : ''"
         />
-        <div>
+        <div v-if="$v.email.$error">
           <span
-            v-if="$v.email.$error && !$v.email.required"
+            v-if="!$v.email.required"
             class="error-msg"
           >
             Email field is required
           </span>
           <span
-            v-else-if="$v.email.$error && !$v.email.email"
+            v-else-if="!$v.email.email"
             class="error-msg"
           >
             Please enter a valid email address
@@ -35,18 +35,18 @@
         <div class="flex justify-between mb-2">
           <label
             for="password"
-            class="block text-gray-700 text-sm font-bold mb-2 uppercase"
+            class="block text-gray-700 text-sm font-bold uppercase"
             >Password</label
           >
-          <a href="#" class="text-sm text-gray-500 font-semi-bold"
+          <a href="#" class="text-sm text-gray-500 hover:underline font-semi-bold"
             >Forgot your password?</a
           >
         </div>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
           type="password"
-          placeholder="Enter Password"
+          placeholder="Enter password"
           v-model.trim="$v.password.$model"
           :class="$v.password.$error ? 'is-invalid' : ''"
         />
@@ -73,7 +73,7 @@
           :disabled="$v.$invalid || isLoading"
           @click="onSubmit"
         >
-          <span class="button__text"> Sign In </span>
+          <span class="button__text"> Sign in </span>
           
         </button>
       </div>

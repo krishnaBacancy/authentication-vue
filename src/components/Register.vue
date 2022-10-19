@@ -16,15 +16,15 @@
           v-model.trim="$v.email.$model"
           :class="$v.email.$error ? 'is-invalid' : ''"
         />
-        <div>
+        <div v-if="$v.email.$error">
           <span
-            v-if="$v.email.$error && !$v.email.required"
+            v-if="!$v.email.required"
             class="error-msg"
           >
             Email field is required
           </span>
           <span
-            v-else-if="$v.email.$error && !$v.email.email"
+            v-else-if="!$v.email.email"
             class="error-msg"
           >
             Please enter a valid email address
@@ -35,15 +35,15 @@
         <div class="flex justify-between mb-2">
           <label
             for="password"
-            class="block text-gray-700 text-sm font-bold mb-2 uppercase"
+            class="block text-gray-700 text-sm font-bold uppercase"
             >Create A Password</label
           >
         </div>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
           type="password"
-          placeholder="Enter Password"
+          placeholder="Enter password"
           v-model.trim="$v.password.$model"
           :class="$v.password.$error ? 'is-invalid' : ''"
         />
@@ -59,6 +59,37 @@
             class="error-msg"
           >
             Password field must contain 8 characters.
+          </span>
+        </div>
+      </div>
+      <div class="mb-6">
+        <div class="flex justify-between mb-2">
+          <label
+            for="password"
+            class="block text-gray-700 text-sm font-bold uppercase"
+            >Confirm Password</label
+          >
+        </div>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm password"
+          v-model.trim="$v.confirmPassword.$model"
+          :class="$v.confirmPassword.$error ? 'is-invalid' : ''"
+        />
+        <div v-if="$v.confirmPassword.$error">
+          <span
+            v-if="!$v.confirmPassword.required"
+            class="error-msg"
+          >
+            Password field is required
+          </span>
+          <span
+            v-else-if="!$v.confirmPassword.sameAsPassword"
+            class="error-msg"
+          >
+            Password and Confirm Password should match
           </span>
         </div>
       </div>
@@ -106,6 +137,7 @@ export default {
     return {
       email: "",
       password: "",
+      confirmPassword: "",
       termsCondition: false
     };
   },
@@ -117,6 +149,10 @@ export default {
     password: {
       required,
       minLength: minLength(8),
+    },
+    confirmPassword: {
+      required,
+      sameAsPassword: sameAs('password')
     },
     termsCondition: {
       sameAs: sameAs( () => true ) 
